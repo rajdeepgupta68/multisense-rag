@@ -1,8 +1,8 @@
-# MultiSense RAG — Multimodal Document Intelligence Platform
+# MultiSense RAG - Multimodal Document Intelligence Platform
 
 A production-grade Retrieval-Augmented Generation (RAG) system with multi-agent orchestration, self-critique loops, and an automated evaluation harness.
 
-Built to go beyond basic RAG demos — this system knows when its answers are bad and retries automatically.
+Built to go beyond basic RAG demos----> this system knows when its answers are bad and retries automatically.
 
 ---
 
@@ -44,11 +44,11 @@ Answer
 ## Key Features
 
 - Multi-agent orchestration via LangGraph stateful graph
-- Self-critique loop — automatically retries poor answers up to 2 times
-- Intent-aware retrieval — summary queries fetch more chunks than factual ones
-- RAGAS eval harness — faithfulness, answer relevancy, context recall scored automatically
-- FastAPI service — typed endpoints for ingestion and querying
-- 100% free stack — Groq LLM, local embeddings, Chroma vector store
+- Self-critique loop - automatically retries poor answers up to 2 times
+- Intent-aware retrieval - summary queries fetch more chunks than factual ones
+- RAGAS eval harness - faithfulness, answer relevancy, context recall scored automatically
+- FastAPI service - typed endpoints for ingestion and querying
+- 100% free stack - Groq LLM, local embeddings, Chroma vector store
 
 ---
 
