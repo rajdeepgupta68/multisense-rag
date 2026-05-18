@@ -1,3 +1,12 @@
+---
+title: MultiSense RAG
+emoji: 🧠
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # MultiSense RAG - Multimodal Document Intelligence Platform
 
 A production-grade Retrieval-Augmented Generation (RAG) system with multi-agent orchestration, self-critique loops, and an automated evaluation harness.
