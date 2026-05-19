@@ -129,4 +129,4 @@ def run(question: str):
     return result
 
 if __name__ == "__main__":
-    run("How does multi-head attention work?")
+    run("What does the podcast say about synchronicities?")

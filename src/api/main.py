@@ -46,6 +46,28 @@ async def ingest(file: UploadFile = File(...)):
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
 
+from src.ingestion.audio import ingest_audio
+
+@app.post("/ingest/audio")
+async def ingest_audio_file(file: UploadFile = File(...)):
+    allowed = [".mp3", ".wav", ".m4a", ".mp4"]
+    if not any(file.filename.endswith(ext) for ext in allowed):
+        raise HTTPException(status_code=400, detail="Supported formats: mp3, wav, m4a, mp4")
+    
+    tmp_path = f"tmp_{file.filename}"
+    try:
+        with open(tmp_path, "wb") as f:
+            shutil.copyfileobj(file.file, f)
+        transcript = ingest_audio(tmp_path)
+        return {
+            "status": "success",
+            "filename": file.filename,
+            "transcript_preview": transcript[:200] + "..."
+        }
+    finally:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+            
 # --- Query the pipeline ---
 @app.post("/query", response_model=QueryResponse)
 async def query(request: QueryRequest):
