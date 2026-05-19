@@ -73,11 +73,18 @@ async def ingest_audio_file(file: UploadFile = File(...)):
 async def query(request: QueryRequest):
     if not request.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
-    
-    result = run(request.question)
-    return QueryResponse(
-        question=result["question"],
-        answer=result["answer"],
-        intent=result["intent"],
-        num_chunks=len(result["chunks"])
-    )
+    try:
+        result = run(request.question)
+        return QueryResponse(
+            question=result["question"],
+            answer=result["answer"],
+            intent=result["intent"],
+            num_chunks=len(result["chunks"])
+        )
+    except Exception as e:
+        if "rate_limit" in str(e).lower() or "429" in str(e):
+            raise HTTPException(
+                status_code=429,
+                detail="LLM rate limit reached. Please try again in a few minutes."
+            )
+        raise HTTPException(status_code=500, detail=str(e))

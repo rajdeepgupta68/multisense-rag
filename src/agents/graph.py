@@ -19,7 +19,7 @@ class RAGState(TypedDict):
     critique: str
     retry_count: int
 
-# --- Agent 1: Router — classifies intent ---
+# --- Agent 1: Router - classifies intent ---
 def router_agent(state: RAGState) -> RAGState:
     prompt = ChatPromptTemplate.from_template("""
 Classify this question into one of these intents:
@@ -35,14 +35,14 @@ Reply with just one word: factual, summary, or comparison.
     print(f"[Router] Intent: {intent}")
     return {**state, "intent": intent}
 
-# --- Agent 2: Retrieval — fetches relevant chunks ---
+# --- Agent 2: Retrieval - fetches relevant chunks ---
 def retrieval_agent(state: RAGState) -> RAGState:
     k = 6 if state["intent"] == "summary" else 4
     chunks = retrieve(state["question"], k=k)
     print(f"[Retrieval] Fetched {len(chunks)} chunks")
     return {**state, "chunks": chunks}
 
-# --- Agent 3: Synthesis — generates answer from chunks ---
+# --- Agent 3: Synthesis - generates answer from chunks ---
 def synthesis_agent(state: RAGState) -> RAGState:
     context = "\n\n".join([doc.page_content for doc in state["chunks"]])
     prompt = ChatPromptTemplate.from_template("""
@@ -63,7 +63,7 @@ Answer:
     print(f"[Synthesis] Answer generated")
     return {**state, "answer": answer}
 
-# --- Agent 4: Critique — checks answer quality ---
+# --- Agent 4: Critique - checks answer quality ---
 def critique_agent(state: RAGState) -> RAGState:
     prompt = ChatPromptTemplate.from_template("""
 Evaluate this answer against the question. Reply with just one word:

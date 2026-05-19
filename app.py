@@ -15,6 +15,8 @@ def query(question):
 ---
 **Intent detected:** {data['intent']}
 **Chunks retrieved:** {data['num_chunks']}"""
+    elif response.status_code == 429:
+        return "⚠️ Rate limit reached. Please try again in a few minutes."
     return f"Error: {response.text}"
 
 def ingest(file):
