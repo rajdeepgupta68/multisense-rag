@@ -26,7 +26,17 @@ def ingest(file):
         return "Document ingested successfully!"
     return f"Error: {response.text}"
 
-with gr.Blocks(title="MultiSense RAG", theme=gr.themes.Soft()) as demo:
+def ingest_audio_gradio(file):
+    if file is None:
+        return "Please upload an audio file."
+    with open(file.name, "rb") as f:
+        response = requests.post(f"{API_URL}/ingest/audio", files={"file": f})
+    if response.status_code == 200:
+        data = response.json()
+        return f" Transcribed and ingested!\n\nPreview: {data['transcript_preview']}"
+    return f"Error: {response.text}"
+
+with gr.Blocks(title="MultiSense RAG") as demo:
     gr.Markdown("# 🧠 MultiSense RAG\nMultimodal document intelligence with multi-agent orchestration.")
     
     with gr.Tab("Query"):
@@ -47,15 +57,6 @@ with gr.Blocks(title="MultiSense RAG", theme=gr.themes.Soft()) as demo:
         audio_btn = gr.Button("Transcribe & Ingest", variant="primary")
         audio_btn.click(ingest_audio_gradio, inputs=audio_input, outputs=audio_status)
 
-def ingest_audio_gradio(file):
-    if file is None:
-        return "Please upload an audio file."
-    with open(file.name, "rb") as f:
-        response = requests.post(f"{API_URL}/ingest/audio", files={"file": f})
-    if response.status_code == 200:
-        data = response.json()
-        return f" Transcribed and ingested!\n\nPreview: {data['transcript_preview']}"
-    return f"Error: {response.text}"
 
 import uvicorn
 import threading
