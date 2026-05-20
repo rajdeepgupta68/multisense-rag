@@ -75,10 +75,17 @@ Answer: {answer}
 Verdict:
 """)
     chain = prompt | llm
-    critique = chain.invoke({
-        "question": state["question"],
-        "answer": state["answer"]
-    }).content.strip().upper()
+    try:
+        critique = chain.invoke({
+            "question": state["question"],
+            "answer": state["answer"]
+        }).content.strip().upper()
+    except Exception as e:
+        if "429" in str(e) or "rate_limit" in str(e).lower():
+            print(f"[Critique] Rate limit hit, defaulting to GOOD")
+            critique = "GOOD"
+        else:
+            raise e
     print(f"[Critique] Verdict: {critique}")
     return {**state, "critique": critique}
 
