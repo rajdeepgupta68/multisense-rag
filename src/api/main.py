@@ -67,6 +67,14 @@ async def ingest_audio_file(file: UploadFile = File(...)):
     finally:
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
+
+@app.post("/clear")
+def clear_vectorstore():
+    import shutil
+    if os.path.exists("./chroma_db"):
+        shutil.rmtree("./chroma_db")
+        os.makedirs("./chroma_db")
+    return {"status": "cleared"}
             
 # --- Query the pipeline ---
 @app.post("/query", response_model=QueryResponse)
@@ -88,3 +96,4 @@ async def query(request: QueryRequest):
                 detail="LLM rate limit reached. Please try again in a few minutes."
             )
         raise HTTPException(status_code=500, detail=str(e))
+    

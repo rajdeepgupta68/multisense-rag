@@ -66,9 +66,9 @@ Answer:
 # --- Agent 4: Critique - checks answer quality ---
 def critique_agent(state: RAGState) -> RAGState:
     prompt = ChatPromptTemplate.from_template("""
-Evaluate this answer against the question. Reply with just one word:
-- GOOD: answer is relevant and complete
-- RETRY: answer is vague, incomplete, or says "I don't have enough information"
+Evaluate this answer. Reply with just one word:
+- GOOD: answer has any relevant content about the question
+- RETRY: answer explicitly says "I don't have enough information"
 
 Question: {question}
 Answer: {answer}
