@@ -144,4 +144,4 @@ pytest evals/ -s
   splits story text into random passages rather than thematic units. 
   Proposed fix: semantic chunking via SemanticChunker.
 - Vector store resets on Space restart (fix: migrate to Supabase pgvector)
-- Groq free tier: 100k tokens/day limit
+- Groq free tier: 100k tokens/day limitgit push space main --force
