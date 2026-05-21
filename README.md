@@ -134,3 +134,14 @@ pytest evals/ -s
 - LLM evaluation methodology (RAGAS metrics)
 - FastAPI service design with typed request/response models
 - LLMOps observability with LangSmith tracing
+
+---
+
+## Known Limitations
+
+- Thematic or interpretive queries (e.g. "what are the main themes?") 
+  perform poorly on narrative documents. The character-based chunker 
+  splits story text into random passages rather than thematic units. 
+  Proposed fix: semantic chunking via SemanticChunker.
+- Vector store resets on Space restart (fix: migrate to Supabase pgvector)
+- Groq free tier: 100k tokens/day limit
